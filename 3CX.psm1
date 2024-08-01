@@ -1,9 +1,12 @@
 #Requires -Version 7.0
 
 Write-Verbose "Discovering functions"
-$PublicFunctions = @(Get-ChildItem -Path $PSScriptRoot\public\ -Include *.ps1 -Recurse) 
-$PrivateFunctions = @(Get-ChildItem -Path $PSScriptRoot\private\ -Include *.ps1 -Recurse)
-$Functions = $PublicFunctions + $PrivateFunctions
+$Functions = @(Get-ChildItem -Path $PSScriptRoot\public\ -Include *.ps1 -Recurse) 
+if(Test-Path -Path $PSScriptRoot\private\){
+    $PrivateFunctions = @(Get-ChildItem -Path $PSScriptRoot\private\ -Include *.ps1 -Recurse)
+    $Functions = $Functions + $PrivateFunctions
+}
+
 
 foreach ($Function in @($Functions)) {
     try {
