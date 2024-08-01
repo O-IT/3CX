@@ -70,15 +70,15 @@ PowerShellVersion = '7.0'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
-    "Connect-3CX.ps1", 
-    "Get-3CXActiveCalls.ps1", 
-    "Get-3CXEventLog.ps1", 
-    "Get-3CXResult.ps1", 
-    "Get-3CXSIPDevice.ps1", 
-    "Get-3CXSystemHealth.ps1", 
-    "Get-3CXSystemStatus.ps1", 
-    "Get-3CXUser.ps1", 
-    "Get-3CXVersion.ps1"
+    "Connect-3CX", 
+    "Get-3CXActiveCalls", 
+    "Get-3CXEventLog", 
+    "Get-3CXResult", 
+    "Get-3CXSIPDevice", 
+    "Get-3CXSystemHealth", 
+    "Get-3CXSystemStatus", 
+    "Get-3CXUser", 
+    "Get-3CXVersion"
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
