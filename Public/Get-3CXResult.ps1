@@ -60,13 +60,12 @@ function Get-3CXResult {
             $targetCount = -1
             $values = New-Object Collections.Generic.List[object]
 
-            while($targetCount -le 0 -or $values.Count -lt $targetCount){
+            while($targetCount -lt 0 -or $values.Count -lt $targetCount){
                 Write-Verbose "Retrieving SIP Devices from Top $PageSize and Skip $($values.Count)"
                 $body = @{
                     '$top' = $PageSize
                     '$skip' = $values.Count
                     '$count' = 'true'
-                    '$orderby' = $PageOrderBy
                 }
                 
                 if(-not [string]::IsNullOrEmpty($PageFilter)){
@@ -76,9 +75,13 @@ function Get-3CXResult {
                 if(-not [string]::IsNullOrEmpty($PageExpand)){
                     $body.'$expand' = $PageExpand
                 }
-                
+
                 if(-not [string]::IsNullOrEmpty($PageSelect)){
                     $body.'$select' = $PageSelect
+                }
+                
+                if(-not [string]::IsNullOrEmpty($PageOrderBy)){
+                    $body.'$orderby' = $PageOrderBy
                 }
                 
                 $result =  Get-3CXResult -Endpoint $Endpoint -Body $body
