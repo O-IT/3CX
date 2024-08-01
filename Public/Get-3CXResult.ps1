@@ -1,23 +1,92 @@
 function Get-3CXResult {
     [CmdletBinding()]
     param(
-        [ValidateNotNull()]
+
+        [Parameter(Mandatory=$True, ParameterSetName="Simple")]
+        [Parameter(Mandatory=$True, ParameterSetName="Paginate")]
         [string]$Endpoint,
-        [string]$Method = 'GET'
+
+        [Parameter(Mandatory=$False, ParameterSetName="Simple")]
+        [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
+        [object]$Body = $null,
+
+        [Parameter(Mandatory=$False, ParameterSetName="Simple")]
+        [string]$Method = 'GET',
+        
+        [Parameter(Mandatory=$True, ParameterSetName="Paginate")]
+        [switch]$Paginate,
+
+        [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
+        [int]$PageSize = 50,
+        
+        [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
+        [string]$PageFilter = '',
+
+        [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
+        [string]$PageOrderBy = '',
+
+        [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
+        [string]$PageSelect = '',
+        
+        [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
+        [string]$PageExpand = ''
     )
 
     if($null -eq $script:3CXSession){
         throw "3CX session not established - Please run Connect-3CX"
     }
 
-    $params = @{
-        Uri = ("https://{0}:{1}{2}" -f $script:3CXSession.APIHost, $script:APIPort, $Endpoint)
-        Method = $Method
-        Headers = @{
-            Authorization = "Bearer $($script:3CXSession.AccessToken)"
-        } 
+    switch($PSCmdlet.ParameterSetName){
+
+        "Simple" {
+            $params = @{
+                Uri = ("https://{0}:{1}{2}" -f $script:3CXSession.APIHost, $script:3CXSession.APIPort, $Endpoint)
+                Method = $Method
+                Headers = @{
+                    Authorization = "Bearer $($script:3CXSession.AccessToken)"
+                } 
+                Body = $Body
+            }
+            Write-Debug "Parameter $($params | ConvertTo-Json)"
+
+            $result = Invoke-WebRequest @params 
+            Write-Debug "Raw Content Result $($result.Content)"
+
+            return ($result.Content | ConvertFrom-Json)
+        }
+
+        "Paginate" {
+
+            $targetCount = -1
+            $values = New-Object Collections.Generic.List[object]
+
+            while($targetCount -le 0 -or $values.Count -lt $targetCount){
+                Write-Verbose "Retrieving SIP Devices from Top $PageSize and Skip $($values.Count)"
+                $body = @{
+                    '$top' = $PageSize
+                    '$skip' = $values.Count
+                    '$count' = 'true'
+                    '$orderby' = $PageOrderBy
+                }
+                
+                if(-not [string]::IsNullOrEmpty($PageFilter)){
+                    $body.'$filter' = $PageFilter
+                }
+
+                if(-not [string]::IsNullOrEmpty($PageExpand)){
+                    $body.'$expand' = $PageExpand
+                }
+                
+                if(-not [string]::IsNullOrEmpty($PageSelect)){
+                    $body.'$select' = $PageSelect
+                }
+                
+                $result =  Get-3CXResult -Endpoint $Endpoint -Body $body
+                $targetCount = $result.'@odata.count'
+                $result.value | ForEach-Object {$values.Add($_)}
+            }
+            
+            return $values
+        }
     }
-    Write-Debug ($params | ConvertTo-Json)
-    $result = Invoke-WebRequest @params 
-    return $result.Content | ConvertFrom-Json
 }
