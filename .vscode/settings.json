@@ -1,8 +1,0 @@
-{
-    "yaml.schemas": {
-        "openapi:v3": [
-            "file:///c%3A/Users/schneider/Downloads/3cxconfigurationapi.yaml",
-            "file:///c%3A/github/3CX/temp/3cxconfigurationapi.yaml"
-        ]
-    }
-}
