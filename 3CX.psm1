@@ -1,5 +1,3 @@
-#Requires -Version 7.0
-
 Write-Verbose "Discovering functions"
 $Functions = @(Get-ChildItem -Path $PSScriptRoot\public\ -Include *.ps1 -Recurse) 
 if(Test-Path -Path $PSScriptRoot\private\){
