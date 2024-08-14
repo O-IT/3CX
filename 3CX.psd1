@@ -33,7 +33,7 @@ Copyright = '(c) xasz. All rights reserved.'
 Description = 'This modules provides a set of cmdlets to interact with 3CX V20 API'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '7.0'
+PowerShellVersion = '5.0'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -117,7 +117,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'New function set'
+        ReleaseNotes = 'Powershell 5'
 
         # Prerelease string of this module
         # Prerelease = ''
