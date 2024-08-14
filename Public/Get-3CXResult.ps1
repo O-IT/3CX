@@ -68,6 +68,7 @@ function Get-3CXResult {
                     Authorization = "Bearer $($script:3CXSession.AccessToken)"
                 } 
                 Body = $Body
+                UseBasicParsing = $true
             }
             Write-Debug "Parameter $($params | ConvertTo-Json)"
 
