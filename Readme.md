@@ -18,6 +18,8 @@ To install the module, you can use the following command:
 Install-Module -Name 3CX
 ```
 
+https://www.powershellgallery.com/packages/3CX/
+
 ## Usage
 
 Once the module is installed, you can import it using the `Import-Module` cmdlet:
