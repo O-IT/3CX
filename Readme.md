@@ -52,3 +52,17 @@ If you would like to contribute to this project, feel free to submit a pull requ
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Availible Functions
+
+```powershell
+Connect-3CX
+Get-3CXActiveCalls
+Get-3CXEventLog
+Get-3CXResult
+Get-3CXSIPDevice
+Get-3CXSystemHealth
+Get-3CXSystemStatus
+Get-3CXUser
+Get-3CXVersion
+```

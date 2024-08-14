@@ -12,7 +12,7 @@
 RootModule = '.\3CX.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.5'
+ModuleVersion = '0.0.6'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -117,7 +117,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '3CX Basic API Module'
+        ReleaseNotes = 'New function set'
 
         # Prerelease string of this module
         # Prerelease = ''
