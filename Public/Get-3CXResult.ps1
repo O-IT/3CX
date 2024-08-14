@@ -1,5 +1,5 @@
 function Get-3CXResult {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "Simple")]
     param(
 
         [Parameter(Mandatory=$True, ParameterSetName="Simple")]
@@ -7,13 +7,17 @@ function Get-3CXResult {
         [string]$Endpoint,
 
         [Parameter(Mandatory=$False, ParameterSetName="Simple")]
-        [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
-        [object]$Body = $null,
+        [AllowNull()]
+        $ID = $null,
 
         [Parameter(Mandatory=$False, ParameterSetName="Simple")]
+        [object]$Body = @{},
+
+        [Parameter(Mandatory=$False, ParameterSetName="Simple")]
+        [ValidateSet('GET', 'POST', 'PATCH', 'DELETE')]
         [string]$Method = 'GET',
         
-        [Parameter(Mandatory=$True, ParameterSetName="Paginate")]
+        [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
         [switch]$Paginate,
 
         [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
@@ -26,11 +30,16 @@ function Get-3CXResult {
         [string]$PageOrderBy = '',
 
         [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
-        [string]$PageSelect = '',
+        [Parameter(Mandatory=$False, ParameterSetName="Simple")]
+        [string[]]$PageSelect = @(),
         
         [Parameter(Mandatory=$False, ParameterSetName="Paginate")]
+        [Parameter(Mandatory=$False, ParameterSetName="Simple")]
         [string]$PageExpand = ''
     )
+    
+    $PageSelect = $PageSelect | Where-Object {$null -ne $_}
+
 
     if($null -eq $script:3CXSession){
         throw "3CX session not established - Please run Connect-3CX"
@@ -39,6 +48,19 @@ function Get-3CXResult {
     switch($PSCmdlet.ParameterSetName){
 
         "Simple" {
+            if($null -ne $ID -or $ID -ge 0){
+                if($ID -match '^\d+$'){
+                    Write-Debug "ID is a number"
+                    $Endpoint = "{0}({1})" -f $Endpoint, $ID
+                }else{
+                    $Endpoint = "{0}('{1}')" -f $Endpoint, $ID
+                }
+            }
+            
+            if(($PageSelect | Measure-Object).Count -gt 0){
+                $Body.'$select' = $PageSelect -join ','
+            }
+
             $params = @{
                 Uri = ("https://{0}:{1}{2}" -f $script:3CXSession.APIHost, $script:3CXSession.APIPort, $Endpoint)
                 Method = $Method
@@ -52,7 +74,13 @@ function Get-3CXResult {
             $result = Invoke-WebRequest @params 
             Write-Debug "Raw Content Result $($result.Content)"
 
-            return ($result.Content | ConvertFrom-Json)
+            $obj = $result.Content | ConvertFrom-Json
+
+            $arrayFields = @('value','@odata.context')
+            if($null -eq (Compare-Object -ReferenceObject $arrayFields -DifferenceObject $obj.PSObject.Properties.Name) ){
+                return $obj.value
+            }
+            return $obj | Select-Object -ExcludeProperty '@odata.context' 
         }
 
         "Paginate" {
@@ -62,29 +90,29 @@ function Get-3CXResult {
 
             while($targetCount -lt 0 -or $values.Count -lt $targetCount){
                 Write-Verbose "Retrieving SIP Devices from Top $PageSize and Skip $($values.Count)"
-                $body = @{
+                $newBody = @{
                     '$top' = $PageSize
                     '$skip' = $values.Count
                     '$count' = 'true'
                 }
                 
                 if(-not [string]::IsNullOrEmpty($PageFilter)){
-                    $body.'$filter' = $PageFilter
+                    $newBody.'$filter' = $PageFilter
                 }
 
                 if(-not [string]::IsNullOrEmpty($PageExpand)){
-                    $body.'$expand' = $PageExpand
+                    $newBody.'$expand' = $PageExpand
                 }
 
-                if(-not [string]::IsNullOrEmpty($PageSelect)){
-                    $body.'$select' = $PageSelect
+                if($PageSelect.Count -gt 0){
+                    $newBody.'$select' = $PageSelect -join ','
                 }
                 
                 if(-not [string]::IsNullOrEmpty($PageOrderBy)){
-                    $body.'$orderby' = $PageOrderBy
+                    $newBody.'$orderby' = $PageOrderBy
                 }
                 
-                $result =  Get-3CXResult -Endpoint $Endpoint -Body $body
+                $result =  Get-3CXResult -Endpoint $Endpoint -Body $newBody
                 $targetCount = $result.'@odata.count'
                 $result.value | ForEach-Object {$values.Add($_)}
             }
