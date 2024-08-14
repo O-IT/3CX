@@ -12,7 +12,7 @@
 RootModule = '.\3CX.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.8'
+ModuleVersion = '0.0.9'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -78,7 +78,9 @@ FunctionsToExport = @(
     "Get-3CXSystemHealth", 
     "Get-3CXSystemStatus", 
     "Get-3CXUser", 
-    "Get-3CXVersion"
+    "Get-3CXVersion",
+    "Get-3CXSBC",
+    "Get-3CXTrunk"
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
