@@ -36,6 +36,10 @@ Connect-3CX -Credential $cred -APIHost "my.3cx.de"
 Get-3CXSystemHealth | ft
 ```
 
+If you have Allow access from specific IP Addresses selected, make sure that you add the IP of the server/PC where you're trying to access API.
+
+`In web console -> Admin -> Advanced -> Console Restrictions`
+
 ### Example Custom API Call
 
 ```powershell
@@ -68,3 +72,4 @@ Get-3CXSystemStatus
 Get-3CXUser
 Get-3CXVersion
 ```
+
