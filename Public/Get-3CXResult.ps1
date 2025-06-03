@@ -66,8 +66,10 @@ function Get-3CXResult {
                 Method = $Method
                 Headers = @{
                     Authorization = "Bearer $($script:3CXSession.AccessToken)"
+                    Accept = 'application/json'
+                    'Content-Type' = 'application/json'
                 } 
-                Body = $Body
+                Body = $Body | ConvertTo-Json -Depth 10
                 UseBasicParsing = $true
             }
             Write-Debug "Parameter $($params | ConvertTo-Json)"
@@ -78,9 +80,13 @@ function Get-3CXResult {
             $obj = $result.Content | ConvertFrom-Json
 
             $arrayFields = @('value','@odata.context')
-            if($null -eq (Compare-Object -ReferenceObject $arrayFields -DifferenceObject $obj.PSObject.Properties.Name) ){
-                return $obj.value
+            
+            if( ($obj.PSObject.Properties.Name | Measure-Object).Count -gt 0) {
+                if($null -eq (Compare-Object -ReferenceObject $arrayFields -DifferenceObject $obj.PSObject.Properties.Name) ){
+                    return $obj.value
+                }
             }
+
             return $obj | Select-Object -ExcludeProperty '@odata.context' 
         }
 

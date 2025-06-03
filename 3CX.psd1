@@ -12,7 +12,7 @@
 RootModule = '.\3CX.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.10'
+ModuleVersion = '0.0.11'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -80,7 +80,10 @@ FunctionsToExport = @(
     "Get-3CXUser", 
     "Get-3CXVersion",
     "Get-3CXSBC",
-    "Get-3CXTrunk"
+    "Get-3CXTrunk",
+    "Get-3CXContacts",
+    "Add-3CXContact",
+    "Get-3CXContact"
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -110,10 +113,10 @@ PrivateData = @{
         Tags = @('3CX', 'API', 'REST', 'V20')
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/xasz/3CX/blob/main/LICENSE'
+        LicenseUri = 'https://github.com/O-IT/3CX/blob/main/LICENSE'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/xasz/3CX'
+        ProjectUri = 'https://github.com/O-IT/3CX'
 
         # A URL to an icon representing this module.
         # IconUri = ''
