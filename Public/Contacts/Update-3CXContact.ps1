@@ -17,70 +17,70 @@ function Update-3CXContact {
         
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $Business = "",
+        $Business = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $Business2 = "",
+        $Business2 = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $BusinessFax ="",
+        $BusinessFax = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $CompanyName = "",
+        $CompanyName = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $Department = "",
+        $Department = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $Email = "",
+        $Email = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $FirstName = "",
+        $FirstName = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $HomeVar = "",
+        $HomeVar = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $LastName = "",
+        $LastName = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $Mobile2 = "",
+        $Mobile2 = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $Other = "",
+        $Other = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $PhoneNumber = "",
+        $PhoneNumber = $null,
 
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
-        $Title = ""
+        $Title = $null
     )
     $body = @{}
-    if ($Business) { $body['Business'] = $Business }
-    if ($Business2) { $body['Business2'] = $Business2 }
-    if ($BusinessFax) { $body['BusinessFax'] = $BusinessFax }
-    if ($CompanyName) { $body['CompanyName'] = $CompanyName }
-    if ($Department) { $body['Department'] = $Department }
-    if ($Email) { $body['Email'] = $Email }
-    if ($FirstName) { $body['FirstName'] = $FirstName }
-    if ($HomeVar) { $body['Home'] = $HomeVar }
-    if ($LastName) { $body['LastName'] = $LastName }
-    if ($Mobile2) { $body['Mobile2'] = $Mobile2 }
-    if ($Other) { $body['Other'] = $Other }
-    if ($PhoneNumber) { $body['PhoneNumber'] = $PhoneNumber }
-    if ($Title) { $body['Title'] = $Title }
+    if ($null -ne $Business) { $body['Business'] = $Business }
+    if ($null -ne $Business2) { $body['Business2'] = $Business2 }
+    if ($null -ne $BusinessFax) { $body['BusinessFax'] = $BusinessFax }
+    if ($null -ne $CompanyName) { $body['CompanyName'] = $CompanyName }
+    if ($null -ne $Department) { $body['Department'] = $Department }
+    if ($null -ne $Email) { $body['Email'] = $Email }
+    if ($null -ne $FirstName) { $body['FirstName'] = $FirstName }
+    if ($null -ne $HomeVar) { $body['Home'] = $HomeVar }
+    if ($null -ne $LastName) { $body['LastName'] = $LastName }
+    if ($null -ne $Mobile2) { $body['Mobile2'] = $Mobile2 }
+    if ($null -ne $Other) { $body['Other'] = $Other }
+    if ($null -ne $PhoneNumber) { $body['PhoneNumber'] = $PhoneNumber }
+    if ($null -ne $Title) { $body['Title'] = $Title }
 
     if ($body.Count -eq 0) {
         throw "At least one parameter must be provided to update a contact."
