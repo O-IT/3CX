@@ -21,13 +21,13 @@ ModuleVersion = '0.0.12'
 GUID = 'e6702acd-5d3e-438a-9b5f-027712371519'
 
 # Author of this module
-Author = 'xasz'
+Author = 'Michael schneider'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'Ostalb IT GmbH'
 
 # Copyright statement for this module
-Copyright = '(c) xasz. All rights reserved.'
+Copyright = '(c) Ostalb IT GmbH. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'This modules provides a set of cmdlets to interact with 3CX V20 API'
@@ -83,7 +83,8 @@ FunctionsToExport = @(
     "Get-3CXTrunk",
     "Get-3CXContacts",
     "Add-3CXContact",
-    "Get-3CXContact"
+    "Get-3CXContact",
+    "Update-3CXContact"
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
