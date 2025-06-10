@@ -1,7 +1,8 @@
 ![Really not 3CX](https://img.shields.io/badge/Not%20Official-Not%203CX-red)
 ![Reverse Engineered](https://img.shields.io/badge/Reverse%20Engineered-yellow)
-![Data Counter Badge](https://img.shields.io/github/search/xasz/3cx/data?label=Data%20Counter%20%28Test%29)
-![Last Commit](https://img.shields.io/github/last-commit/xasz/3cx)
+![Data Counter Badge](https://img.shields.io/github/search/O-IT/3cx/data?label=Data%20Counter%20%28Test%29)
+![Last Commit](https://img.shields.io/github/last-commit/O-IT/3cx)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/3CX)](https://www.powershellgallery.com/packages/3CX/)
 
 # 3CX - A Inofficial Powershell Module for 3CX V20
 
