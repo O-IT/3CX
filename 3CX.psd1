@@ -21,7 +21,7 @@ ModuleVersion = '0.0.14'
 GUID = 'e6702acd-5d3e-438a-9b5f-027712371519'
 
 # Author of this module
-Author = 'Michael schneider'
+Author = 'Michael Schneider'
 
 # Company or vendor of this module
 CompanyName = 'Ostalb IT GmbH'
@@ -84,7 +84,8 @@ FunctionsToExport = @(
     "Get-3CXContacts",
     "Add-3CXContact",
     "Get-3CXContact",
-    "Update-3CXContact"
+    "Update-3CXContact",
+    "Get-CodecsSettings"
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
